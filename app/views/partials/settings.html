@@ -1,0 +1,90 @@
+<div ng-include="'partials/navbar.html'"></div>
+<div class="row">
+    <h1> Setting</h1>
+    <form class="form-horizontal" name="form" role="form">
+        <fieldset>
+            <legend>Profile Settings</legend>
+            <div class="form-group">
+                <label class="col-sm-1" for="settingsInputName">Name</label>
+
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="settingsInputName" name="name"
+                           placeholder="Name" ng-model="settings.name" ng-required="true" ng-minlength="3" ng-maxlength="20"
+                           ng-pattern="/^[a-zA-Z]+$/" >
+
+                    <div ng-show="form.name.$dirty && form.name.$invalid">
+                        <div ng-show="form.name.$error.required"><span class="help-block">Your name is required</span></div>
+                        <div ng-show="form.name.$error.minlength"><span class="help-block">Your name must be at least 3 characters</span></div>
+                        <div ng-show="form.name.$error.maxlength"><span class="help-block">You got a nick name?</span></div>
+                        <div ng-show="form.name.$error.pattern"><span class="help-block">I just need your first name w/o spacing</span></div>
+
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1" for="settingsInputEmail">Email</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" name="email" id="settingsInputEmail"
+                           placeholder="Email"  ng-required="true" ng-model="settings.email">
+                    <div ng-show="form.email.$dirty && form.email.$invalid">
+                        <div ng-show="form.email.$error.required"><span class="help-block">Your email is required</span></div>
+                        <div ng-show="form.email.$error.email"><span class="help-block">Please enter a valid email</span></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1" for="settingsInputAge">Age</label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" name="age" id="settingsInputAge"
+                           placeholder="Age"  ng-model="settings.age">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-push-6 col-sm-3">
+                    <button type="submit" class="btn btn-success pull-right">Update</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    {{settings}}
+</div>
+<!--
+<div class="row">
+  <div class="col-sm-12">
+    <h1>Change Password</h1>
+  </div>
+  <div class="col-sm-12">
+    <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+    	
+      <div class="form-group">
+        <label>Current Password</label>
+
+        <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+               mongoose-error/>    
+        <p class="help-block" ng-show="form.password.$error.mongoose">
+            {{ errors.other }}
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label>New Password</label>
+
+        <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword" 
+               ng-minlength="3"
+               required/>
+        <p class="help-block"
+           ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+          Password must be at least 3 characters.
+        </p>
+      </div>
+
+      <p class="help-block"> {{ message }} </p>
+
+      <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+    </form>
+  </div>
+</div>
+-->
