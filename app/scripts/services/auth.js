@@ -106,6 +106,6 @@ angular.module('emailClientApp')
       isLoggedIn: function() {
         var user = $rootScope.currentUser;
         return !!user;
-      },
+      }
     };
   });

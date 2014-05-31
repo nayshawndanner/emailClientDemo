@@ -1,5 +1,97 @@
 <div ng-include="'partials/navbar'"></div>
-<h1>This is the Main page</h1>
+  <div class="header">
+  <h3 class="text-muted">Inbox</h3>
+  </div>
+<!-- Row 2 -->
+
+<div class="row">
+  <!-- Column 1 Menu Pain -->
+  <aside class="col-lg-2 visible-lg">
+    <h4><small>Folders</small></h4>
+  </aside>
+  <!-- Column 2 Email List -->
+  <article class="col-lg-10">
+    <div class="panel panel-success" ng-controller="MailListingCtrl">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>Subject</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="email in emails" ng-click="setSelectedMail(email)" ng-class="{selected: isSelected(email)}">
+                <td>{{email.from.join(", ")}}</td>
+                <td>{{email.subject}}</td>
+                <td>{{email.date | date: 'MM/dd/yy'}}</td>
+            </tr>
+        </tbody>  
+      </table>  
+    </div>
+    <div ng-controller="ContentCtrl">
+        {{reply}}
+        <h2>Content</h2>
+        <div ng-show="!selectedEmail">
+            <h1>No conversation selected.</h1>
+        </div>
+        <div class="msgContentArea" ng-show="selectedEmail">
+            <div class="row" ng-show="showingReply">
+                <form id="replyForm" ng-submit="sendEmailReply()" role="form" name="replyForm">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-sm-12 replyTo">
+                                <div class="input-group">
+                                    <span class="input-group-addon">To</span>
+                                    <input type="email" class="form-control" id="replyInputTo"
+                                           ng-required="true" ng-model="reply.to"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 replySubject">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Subject</span>
+                                    <input type="text" class="form-control" id="replyInputSubject"
+                                           ng-model="reply.subject"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 replyMessage">
+                                <textarea class="form-control" id="replyTxtAreaBody" placeholder="Message"
+                                          ng-model="reply.body"  rows="15" style="resize: none" >{{reply.body}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 replyButtons">
+                                <div class="pull-right">
+                                    <button class="button btn-success " ng-click="sendReply()">Send</button>
+                                    <button class="button btn-danger" ng-click="toggleReplyForm()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row header">
+                <div class="col-xs-8">{{selectedEmail.subject}}</div>
+                <div class="col-xs-4">{{selectedEmail.date | date: 'MM/dd/yy'}}</div>
+            </div>
+            <div class="row active">
+                <div class="col-xs-8">{{selectedEmail.from.join(", ")}} <strong>to</strong> {{selectedEmail.to.join(", ")}}</div>
+                <div class="col-xs-4" ng-show="!showingReply"><button ng-click="toggleReplyForm()"
+                                                                      class="button btn-primary pull-right">Reply</button></div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12" ng-bind-html="selectedEmail.body"></div>
+            </div>
+        </div>
+    </div>
+  </article>
+
+</div>
+
 
 <!--<div class="jumbotron">
   <h1>'Allo, 'Allo <span ng-show="currentUser">{{ currentUser.name }}</span>!</h1>

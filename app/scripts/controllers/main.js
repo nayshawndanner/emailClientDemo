@@ -2,7 +2,25 @@
 
 angular.module('emailClientApp')
   .controller('MainCtrl', function ($scope, $http) {
-    $http.get('/api/awesomeThings').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
+    $scope.success = false;
+    $scope.emails = [];
+    $scope.selectedEmail = false;
+    $http.get('/api/email').success(function(emails) {
+        $scope.success = true;
+        $scope.emails = emails;
+
+      }).error(function(){
+            $scope.succes = false;
+            $scope.emails = 'none';
+          });
+
+    $scope.setSelectedMail = function(email){
+        $scope.selectedEmail = email;
+        //$scope.selectedEmail.body = $scope.selectedEmail.body.join('/n');
+      };
+    $scope.isSelected = function(email){
+        if($scope.selectedEmail){
+          return email === $scope.selectedEmail;
+        }
+      };
   });
